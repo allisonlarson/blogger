@@ -10,3 +10,13 @@
 </ul>
 
 <%= link_to "Create a New Article", new_article_path, class: 'new_article' %>
+<br />
+<div id="popular">
+<h2>Most Popular</h2>
+<ul>
+  <% @most_popular.each do |a| %>
+  <li><%= a.title %><br />
+    Viewed <%= a.views %> times</li>
+  <% end %>
+</ul>
+</div>

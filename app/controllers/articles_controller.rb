@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
+    @most_popular = Article.most_popular[0..2]
   end
 
   def article

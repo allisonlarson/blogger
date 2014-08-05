@@ -24,4 +24,8 @@ class Article < ActiveRecord::Base
     self.save
   end
 
+  def self.most_popular
+    all.sort_by{|a| a.views }.reverse
+  end
+
 end
