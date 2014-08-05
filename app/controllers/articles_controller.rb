@@ -7,45 +7,51 @@ class ArticlesController < ApplicationController
     @articles = Article.all
   end
 
-  def show
-    @article = Article.find(params[:id])
-    @comment = Comment.new
-
-    @comment.article_id = @article.id
+  def article
+    @cached_article ||= if params[:id]
+      Article.find(params[:id])
+    else
+      Article.new
+    end
   end
 
-  def new
-    @article = Article.new
+  def comment
+    @cached_comment ||= if params[:article_id]
+      Comment.find(params[:article_id])
+    else
+      Comment.new
+    end
+  end
+
+  helper_method :article, :comment
+
+  def show
+    article.view_count
+    comment.article_id = article.id
   end
 
   def create
-    @article = Article.new(article_params)
-    @article.save
+    article.save
 
-    flash.notice = "Article '#{@article.title}' Was Created!"
+    flash.notice = "Article '#{article.title}' Was Created!"
 
-    redirect_to article_path(@article)
+    redirect_to article_path(article)
   end
 
   def destroy
-    @article = Article.find(params[:id])
-    @article.destroy
+    article.destroy
 
     flash.notice = "Article '#{article.title}' Was Deleted!"
 
     redirect_to articles_path
   end
 
-  def edit
-    @article = Article.find(params[:id])
-  end
 
   def update
-    @article = Article.find(params[:id])
-    @article.update(article_params)
+    article.update(article_params)
 
-    flash.notice = "Article '#{@article.title}' Updated!"
+    flash.notice = "Article '#{article.title}' Updated!"
 
-    redirect_to article_path(@article)
+    redirect_to article_path(article)
   end
 end
