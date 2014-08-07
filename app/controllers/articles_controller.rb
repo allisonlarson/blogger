@@ -9,11 +9,7 @@ class ArticlesController < ApplicationController
   end
 
   def article
-    @cached_article ||= if params[:id]
-      Article.find(params[:id])
-    else
-      Article.new
-    end
+    @cached_article ||= Article.find_or_create_by(id: params[:id])
   end
 
   def comment

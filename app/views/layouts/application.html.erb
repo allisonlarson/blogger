@@ -7,10 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <p class="flash">
+  <div><p class="flash">
     <%= flash.notice %>
-  </p>
-  <div class ='nav-bar'>
+  </p></div>
+
+  <div class='nav-bar'>
     <h1><%= link_to "All Articles", articles_path %> <%= link_to "Tags", tags_path %>
   </div>
   <div id="container">
